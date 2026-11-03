@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AGEVERSE</title>
+<meta name="description" content="AGEVERSE — Age calculator, zodiac sign, life map | حاسبة العمر والبرج">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⏳</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07050f;--b:#2a2350;--p:#a78bfa;--g:#e8c37a;--t:#f3f0ff;--m:#9a93b8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Cairo,system-ui,sans-serif;background:radial-gradient(800px 500px at 85% -5%,#3b21886b,transparent),radial-gradient(600px 400px at 0 40%,#1d2a7a40,transparent),var(--bg);color:var(--t);line-height:1.8;overflow-x:hidden}
+.w{max-width:900px;margin:auto;padding:0 16px}
+.top{display:flex;justify-content:space-between;align-items:center;padding:18px 16px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:3px}
+.logo b{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#8b5cf6,#5b6cf0);box-shadow:0 0 24px #8b5cf688}
+.gh{background:#1a1538;color:var(--t);border:1px solid var(--b);border-radius:12px;padding:8px 16px;font:600 .95rem Cairo;cursor:pointer}
+.hero{text-align:center;padding:50px 0 40px}
+.badge{display:inline-block;border:1px solid var(--b);background:#14102a;border-radius:99px;padding:4px 16px;color:var(--p);font-size:.9rem}
+h1{font-size:clamp(2.3rem,9vw,4.6rem);font-weight:900;line-height:1.25;margin:20px 0}
+em{font-style:normal;background:linear-gradient(90deg,#c4b5fd,#818cf8,#e8c37a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--m);max-width:560px;margin:0 auto 26px;font-size:1.05rem}
+.btn{display:inline-block;background:linear-gradient(135deg,#8b5cf6,#5b6cf0);color:#fff;border:0;border-radius:14px;padding:13px 26px;font:700 1.05rem Cairo;cursor:pointer;text-decoration:none;box-shadow:0 10px 30px #7c3aed55;transition:.2s}
+.btn:active{transform:scale(.97)}
+.card{background:linear-gradient(160deg,#1a1538,#0f0b22);border:1px solid var(--b);border-radius:24px;padding:22px;margin:18px 0;animation:up .6s both}
+@keyframes up{from{opacity:0;transform:translateY(20px)}}
+h2{font-size:1.5rem;font-weight:900;margin-bottom:12px}
+h3{color:var(--g);font-size:1.05rem;margin:14px 0 4px}
+.mu{color:var(--m);font-size:.92rem}
+label{display:block;color:var(--m);margin-bottom:6px}
+input{width:100%;background:#0a0818;border:1px solid var(--b);color:#fff;border-radius:14px;padding:13px;font:1.05rem Cairo;color-scheme:dark;margin-bottom:14px;text-align:start}
+.card>.btn{width:100%;margin-bottom:12px}
+.row{display:flex;gap:10px}.row input{margin:0}.row .btn{width:auto}
+.big{font-size:clamp(3.2rem,18vw,6.5rem);font-weight:900;line-height:1.1;background:linear-gradient(90deg,#c4b5fd,#818cf8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:14px}
+.stat{background:#0d0a1f;border:1px solid var(--b);border-radius:16px;padding:12px;text-align:center}
+.stat b{display:block;font-size:1.25rem;direction:ltr;overflow-wrap:anywhere}
+.stat span{color:var(--m);font-size:.85rem}
+.nb{margin-top:14px;padding:14px;border-radius:16px;background:#241a4d;border:1px solid var(--b);color:#d8ccff;font-weight:700}
+.zh{display:flex;align-items:center;gap:16px}
+.sym{font-size:4.2rem;line-height:1;color:var(--g);text-shadow:0 0 30px #e8c37a77}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.chips span{background:#241a4d;border:1px solid var(--b);border-radius:99px;padding:3px 14px;font-size:.92rem}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+canvas{width:100%;display:block;margin:12px 0}
+.out{margin-top:14px;padding:14px;border-radius:16px;background:#241a4d;color:#d8ccff;font-weight:700;text-align:center}
+.c{text-align:center}
+footer{text-align:center;color:var(--m);padding:30px 16px 40px;font-size:.9rem}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background-image:radial-gradient(1.5px 1.5px at 20% 30%,#fff9,transparent),radial-gradient(1px 1px at 70% 20%,#e8c37a,transparent),radial-gradient(1.5px 1.5px at 40% 80%,#c4b5fd,transparent),radial-gradient(1px 1px at 85% 65%,#fff8,transparent),radial-gradient(1px 1px at 10% 70%,#e8c37a99,transparent);background-size:340px 340px;animation:tw 5s infinite alternate}
+@keyframes tw{from{opacity:.3}to{opacity:1}}
+em{display:inline-block;background-size:200% 100%;animation:sh 5s linear infinite}
+@keyframes sh{to{background-position:200% 0}}
+.card{background:linear-gradient(160deg,#1c1640dd,#0d0920dd);backdrop-filter:blur(8px);border-color:#3a2f73;box-shadow:0 20px 60px #0009,inset 0 1px 0 #ffffff14}
+.card::before{content:"";position:absolute;top:0;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,var(--g),transparent)}
+.card h2{background:linear-gradient(90deg,#fff,#e8c37a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sym{width:96px;height:96px;display:grid;place-items:center;border-radius:50%;border:1px solid #e8c37a66;background:radial-gradient(#e8c37a26,transparent 70%);box-shadow:0 0 40px #e8c37a33;font-size:3.3rem}
+.stat{background:linear-gradient(160deg,#130e2e,#0a0818);transition:.25s}.stat:hover{border-color:var(--g);transform:translateY(-3px)}
+.btn{background:linear-gradient(135deg,#8b5cf6,#5b6cf0 55%,#8b5cf6);background-size:220% 100%}.btn:hover{background-position:100% 0}
+.big{filter:drop-shadow(0 0 24px #8b5cf666)}
+.nb{background:linear-gradient(160deg,#241a4d,#150f33);border-color:#e8c37a44}
+.row3{display:flex;gap:8px;margin-bottom:14px}.row3 select{flex:1;min-width:0;background:#0a0818;border:1px solid var(--b);color:#fff;border-radius:14px;padding:13px 6px;font:1rem Cairo;color-scheme:dark}
+</style>
+</head>
+<body>
+<header class="top"><div class="logo"><b>A</b><span>AGEVERSE</span></div><button class="gh" id="lg">English</button></header>
+<main class="w">
+<section class="hero"><span class="badge" data-t="tag"></span><h1><span data-t="h1a"></span> <em data-t="h1b"></em></h1><p data-t="sub"></p><a class="btn" href="#calc" data-t="cta"></a></section>
+<section class="card" id="calc"><h2 data-t="calcT"></h2><label for="dd" data-t="dob"></label><div class="row3"><select id="dd"></select><select id="dm"></select><select id="dy"></select></div><button class="btn" id="go" data-t="go"></button><p class="mu" data-t="priv"></p></section>
+<div id="res" hidden>
+<section class="card"><p class="mu" data-t="now"></p><div class="big" id="ay"></div><p class="mu" id="amd"></p><div class="grid" id="st"></div><div class="nb" id="nb"></div></section>
+<section class="card" id="zd"></section>
+<section class="card"><h2 data-t="fT"></h2><div class="grid" id="ft"></div></section>
+<section class="card"><h2 data-t="mT"></h2><p class="mu" data-t="mS"></p><canvas id="cv"></canvas><p class="mu" id="mf"></p></section>
+<section class="card"><h2 data-t="uT"></h2><div class="row"><input id="fy" type="number" dir="ltr" lang="en"><button class="btn" id="fg" data-t="fgo"></button></div><p class="mu" data-t="fh" style="margin-top:12px"></p><p class="out" id="fr" hidden></p></section>
+<section class="card c"><h2 data-t="sT"></h2><button class="btn" id="sh" data-t="sB"></button></section>
+</div>
+</main>
+<footer><b>AGEVERSE © 2026</b><br><span data-t="ft2"></span></footer>
+<script>
+const $=i=>document.getElementById(i),f=n=>Math.floor(n).toLocaleString('en-US');
+const L={
+ar:{title:'AGEVERSE — حياتك، وقتك',tag:'رحلتك تستحق أن تُكتشف',h1a:'كل لحظة من عمرك',h1b:'لها حكاية.',sub:'احسب عمرك بدقة الثانية، واكتشف برجك وصفاته وتوافقه وأسرار رحلتك مع الزمن.',cta:'اكتشف عمري ↓',calcT:'ابدأ من يوم ميلادك',dob:'تاريخ الميلاد',go:'✦ احسب عمري',priv:'🔒 كل الحسابات تتم على جهازك ولا يُرسل شيء إلى أي خادم.',bad:'أدخل تاريخ ميلاد صحيحاً',now:'عمرك الحالي',yr:'سنة',mo:'شهر',dy:'يوم',u:['يوم','ساعة','دقيقة','ثانية'],nb:'عيد ميلادك القادم',left:'يوم متبقي',today:'🎉 اليوم عيد ميلادك! كل عام وأنت بخير',pl:'الكوكب الحاكم',str:'✨ الإيجابيات ونقاط القوة',weak:'⚠️ نقاط الضعف',comp:'💞 الأبراج الأكثر توافقاً',lc:'لون الحظ',ls:'حجر الميلاد',ld:'يوم الحظ',disc:'الأبراج للتسلية والترفيه وليست حقائق علمية.',fT:'حقائق عن رحلتك',wd:'وُلدت يوم',gen:'جيلك',hb:'نبضات قلبك (تقريباً)',mn:'أقمار كاملة عشتها',sl:'سنوات قضيتها نائماً',wk:'أسابيع عشتها',mT:'خريطة الحياة',mS:'كل نقطة تمثل أسبوعاً، على افتراض 90 سنة (تصور توضيحي لا توقع).',mf:'عشتَ {w} أسبوعاً من أصل 4,680',uT:'اقفز إلى المستقبل',fgo:'احسب',fr:'في سنة {y} سيكون عمرك {a} سنة ✨',sT:'لحظتك تستحق أن تُحفظ',sB:'↗ حمّل بطاقة عمري',ft2:'صُنع ليمنحك نظرة أجمل على رحلتك مع الزمن.',g:['الجيل الصامت','جيل الطفرة','الجيل إكس','جيل الألفية','الجيل زد','جيل ألفا'],e:['🔥 نار','🌍 تراب','💨 هواء','💧 ماء'],md:['كاردينال (مبادر)','ثابت','متغير (مرن)']},
+en:{title:'AGEVERSE — Your Life, Your Time',tag:'Your journey deserves to be discovered',h1a:'Every moment of your life',h1b:'has a story.',sub:'Calculate your age to the second, then discover your zodiac sign, its traits, compatibility and the secrets of your journey through time.',cta:'Discover my age ↓',calcT:'Start from your birthday',dob:'Date of birth',go:'✦ Calculate my age',priv:'🔒 Everything is calculated on your device. Nothing is sent to any server.',bad:'Enter a valid birth date',now:'Your current age',yr:'Years',mo:'Months',dy:'Days',u:['Days','Hours','Minutes','Seconds'],nb:'Your next birthday',left:'days left',today:'🎉 Today is your birthday! Happy birthday!',pl:'Ruling planet',str:'✨ Strengths & positives',weak:'⚠️ Weaknesses',comp:'💞 Most compatible signs',lc:'Lucky color',ls:'Birthstone',ld:'Lucky day',disc:'Horoscopes are for entertainment only, not scientific facts.',fT:'Facts about your journey',wd:'You were born on a',gen:'Your generation',hb:'Heartbeats (approx.)',mn:'Full moons you have seen',sl:'Years spent sleeping',wk:'Weeks lived',mT:'Life Map',mS:'Each dot is one week, assuming 90 years (an illustration, not a prediction).',mf:'You have lived {w} of 4,680 weeks',uT:'Jump to the future',fgo:'Calculate',fr:'In {y} you will be {a} years old ✨',sT:'Your moment deserves to be saved',sB:'↗ Download my age card',ft2:'Made to give you a better look at your journey through time.',g:['Silent Generation','Baby Boomers','Gen X','Millennials','Gen Z','Gen Alpha'],e:['🔥 Fire','🌍 Earth','💨 Air','💧 Water'],md:['Cardinal','Fixed','Mutable']}};
+// name|planet|traits|strengths|weaknesses|color|stone|day
+const Z={ar:[
+'الحمل|المريخ|جريء ومندفع وقيادي، يحب التحدي والبدايات الجديدة.|الشجاعة، الحماس، المبادرة، الصراحة|التسرع، العناد، سرعة الغضب|الأحمر|الألماس|الثلاثاء',
+'الثور|الزهرة|هادئ وصبور، يقدّر الجمال والراحة والاستقرار.|الإخلاص، الصبر، الاعتمادية، الذوق الرفيع|العناد، التملك، مقاومة التغيير|الأخضر|الزمرد|الجمعة',
+'الجوزاء|عطارد|ذكي وفضولي وسريع البديهة واجتماعي.|سرعة التعلم، الفكاهة، المرونة، حسن التواصل|التقلب، التشتت، القلق|الأصفر|العقيق|الأربعاء',
+'السرطان|القمر|عاطفي وحنون ومتعلق بالعائلة والبيت.|الحدس، الوفاء، الحنان، الحماية|فرط الحساسية، التعلق بالماضي، تقلب المزاج|الفضي|اللؤلؤ|الاثنين',
+'الأسد|الشمس|واثق وكريم وكاريزمي، يحب الصدارة.|الكرم، الثقة، القيادة، الدفء|الغرور، حب السيطرة، الحساسية للنقد|الذهبي|الياقوت الأحمر|الأحد',
+'العذراء|عطارد|دقيق وتحليلي ومنظّم، يسعى للكمال.|الدقة، الاجتهاد، العملية، الذكاء|النقد المفرط، القلق، المثالية الزائدة|البني|الياقوت الأزرق|الأربعاء',
+'الميزان|الزهرة|دبلوماسي وأنيق، يسعى للعدل والتوازن.|العدل، اللباقة، الذوق، روح التعاون|التردد، تجنب المواجهة، الاعتماد على الآخرين|الوردي|الأوبال|الجمعة',
+'العقرب|بلوتو|غامض وعميق وشغوف بإرادة قوية.|الإصرار، الولاء، الشجاعة، البصيرة|الغيرة، الكتمان، صعوبة النسيان|العنابي|التوباز|الثلاثاء',
+'القوس|المشتري|متفائل ومحب للمغامرة والحرية والمعرفة.|التفاؤل، الصدق، الانفتاح، روح المغامرة|قلة الصبر، المبالغة، التهرب من الالتزام|البنفسجي|الفيروز|الخميس',
+'الجدي|زحل|طموح ومنضبط ومسؤول، يبني بثبات.|الانضباط، المثابرة، المسؤولية، الحكمة|الجدية الزائدة، التشاؤم، الإفراط في العمل|الرمادي|العقيق الأحمر|السبت',
+'الدلو|أورانوس|مبتكر ومستقل وإنساني بتفكير مختلف.|الابتكار، الاستقلالية، الإنسانية، الأصالة|البرود العاطفي، العناد الفكري، التمرد|الأزرق|الجمشت|السبت',
+'الحوت|نبتون|حالم وحنون وفنان بروح روحانية.|الخيال، التعاطف، الإبداع، الحدس|الهروب من الواقع، السذاجة، التأثر السريع|الأخضر البحري|الأكوامارين|الخميس'],
+en:[
+'Aries|Mars|Bold, driven and a natural leader who loves challenges and fresh starts.|Courage, enthusiasm, initiative, honesty|Impulsive, stubborn, quick-tempered|Red|Diamond|Tuesday',
+'Taurus|Venus|Calm and patient, values beauty, comfort and stability.|Loyalty, patience, reliability, refined taste|Stubborn, possessive, resists change|Green|Emerald|Friday',
+'Gemini|Mercury|Clever, curious, quick-witted and sociable.|Fast learner, humor, adaptability, communication|Changeable, scattered, anxious|Yellow|Agate|Wednesday',
+'Cancer|Moon|Emotional, caring and deeply attached to family and home.|Intuition, loyalty, tenderness, protectiveness|Oversensitive, clings to the past, moody|Silver|Pearl|Monday',
+'Leo|Sun|Confident, generous and charismatic, loves the spotlight.|Generosity, confidence, leadership, warmth|Pride, controlling, sensitive to criticism|Gold|Ruby|Sunday',
+'Virgo|Mercury|Precise, analytical and organized, aims for perfection.|Accuracy, diligence, practicality, intelligence|Overcritical, anxious, perfectionist|Brown|Sapphire|Wednesday',
+'Libra|Venus|Diplomatic and elegant, seeks fairness and balance.|Fairness, tact, taste, teamwork|Indecisive, avoids conflict, dependent|Pink|Opal|Friday',
+'Scorpio|Pluto|Mysterious, deep and passionate with a strong will.|Determination, loyalty, courage, insight|Jealous, secretive, holds grudges|Burgundy|Topaz|Tuesday',
+'Sagittarius|Jupiter|Optimistic, adventurous, loves freedom and knowledge.|Optimism, honesty, open-mindedness, adventurous spirit|Impatient, exaggerates, avoids commitment|Purple|Turquoise|Thursday',
+'Capricorn|Saturn|Ambitious, disciplined and responsible, builds steadily.|Discipline, perseverance, responsibility, wisdom|Too serious, pessimistic, overworks|Gray|Garnet|Saturday',
+'Aquarius|Uranus|Inventive, independent and humanitarian, thinks differently.|Innovation, independence, humanity, originality|Emotionally distant, intellectually stubborn, rebellious|Blue|Amethyst|Saturday',
+'Pisces|Neptune|Dreamy, gentle and artistic with a spiritual soul.|Imagination, empathy, creativity, intuition|Escapist, naive, easily influenced|Sea green|Aquamarine|Thursday']};
+Object.assign(L.ar,{nb:'🎂 العد التنازلي لعيد ميلادك',nu:['شهر','أسبوع','يوم','ساعة','دقيقة','ثانية'],wd:'وُلدتَ يوم',wk:'أسبوعاً عشتَه',hb:'نبضات قلبك (تقريباً)',br:'أنفاس تنفستها (تقريباً)',stp:'خطوات مشيتها (تقريباً)',km:'المسافة التي قطعتها مع الأرض',mn:'أقمار كاملة شاهدتها',sl:'مدة نومك حتى الآن',ml:'وجبات تناولتها (تقريباً)',wt:'لترات ماء شربتها (تقريباً)',ms:'عمرك على المريخ (بالسنوات المريخية)',mr:'عمرك على عطارد (بالسنوات العطاردية)',jp:'عمرك على المشتري (بالسنوات)',M:'مليون',B:'مليار',kmu:'كم',yu:'سنة',sy:'رمز البرج',op:'البرج المقابل',lv:'❤️ في الحب',cr:'💼 في العمل',hl:'🌿 الصحة',nm:'أرقام الحظ'});
+Object.assign(L.en,{nb:'🎂 Countdown to your birthday',nu:['Months','Weeks','Days','Hours','Minutes','Seconds'],wk:'Weeks lived',hb:'Heartbeats (approx.)',br:'Breaths taken (approx.)',stp:'Steps walked (approx.)',km:'Distance traveled with Earth',mn:'Full moons you have seen',sl:'Time spent sleeping so far',ml:'Meals eaten (approx.)',wt:'Liters of water drunk (approx.)',ms:'Your age on Mars (Mars years)',mr:'Your age on Mercury (Mercury years)',jp:'Your age on Jupiter (Jupiter years)',M:'million',B:'billion',kmu:'km',yu:'years',sy:'Symbol',op:'Opposite sign',lv:'❤️ In love',cr:'💼 At work',hl:'🌿 Health',nm:'Lucky numbers'});
+Object.assign(L.ar,{dl:['اليوم','الشهر','السنة'],fh:'💡 اكتب أي سنة في المستقبل (مثل 2040) ثم اضغط «احسب» لتعرف كم سيكون عمرك في تلك السنة.',fp:'مثال: 2040',fe:'اكتب سنة أكبر من سنة ميلادك.'});
+Object.assign(L.en,{dl:['Day','Month','Year'],fh:'💡 Type any future year (like 2040) and press "Calculate" to see how old you will be in that year.',fp:'e.g. 2040',fe:'Enter a year later than your birth year.'});
+// symbol|love|career|health|numbers
+const Z2={ar:[
+'الكبش|عاشق شغوف ومباشر، يحب المطاردة والمفاجآت ويحتاج شريكاً يواكب حماسه.|يتألق في القيادة وريادة الأعمال والرياضة وكل مهنة تتطلب سرعة القرار.|طاقة عالية، لكنه عرضة للصداع والإصابات ويحتاج راحة كافية.|9، 1، 17',
+'الثور|وفيّ وهادئ يبني علاقة طويلة قائمة على الأمان والحنان.|ينجح في المال والفن والطبخ والعقارات ويفضّل العمل المستقر.|حساس في الحلق والرقبة، ويحتاج الانتباه للغذاء والوزن.|6، 2، 24',
+'التوأم|يحب الحوار والمرح والتجدد، ويملّ من الروتين بسرعة.|مناسب للإعلام والتسويق والكتابة والتدريس والمبيعات.|توتر الأعصاب وقلة النوم أبرز تحدياته، ويفيده التأمل.|5، 7، 14',
+'السلطعون|رومانسي حنون يمنح حباً عميقاً ويحتاج إلى الطمأنينة.|ينجح في التعليم والرعاية والضيافة والإدارة المالية الحذرة.|معدته تتأثر بمشاعره، فالراحة النفسية أساس صحته.|2، 7، 11',
+'الأسد|دافئ وكريم في الحب، يحب التقدير ويرد الجميل بسخاء.|وُلد للقيادة والفن والإدارة وكل مجال يضعه في الواجهة.|قلبه وظهره يحتاجان عناية، والحركة تناسبه.|1، 3، 10',
+'العذراء|صادق وحذر في مشاعره، يعبّر عن حبه بالأفعال والاهتمام بالتفاصيل.|ممتاز في الطب والتحليل والمحاسبة والبرمجة والتنظيم.|يميل إلى القلق وحساسية الجهاز الهضمي، ويفيده الروتين الصحي.|5، 14، 23',
+'الميزان|يعشق الشراكة والجمال والرومانسية، ويكره الخلافات والجفاء.|يتألق في القانون والتصميم والدبلوماسية والعلاقات العامة.|الكلى وتوازن الأكل والنوم أهم ما يحتاج متابعته.|6، 15، 24',
+'العقرب|عاشق عميق ومخلص، لا يمنح ثقته بسهولة لكنه لا ينسى من أحب.|مناسب للتحقيق والطب والبحث والاستثمار وعلم النفس.|قوي الجسد لكنه يكتم التوتر، ويحتاج تفريغاً صحياً لمشاعره.|8، 11، 18',
+'الرامي|يحب الحرية والمغامرة، ويبحث عن شريك يشاركه الضحك والسفر.|يبرع في السفر والتعليم والفلسفة والرياضة والعمل الحر.|الوركان والفخذان والإصابات الرياضية أكثر ما يستحق الانتباه.|3، 9، 22',
+'الماعز البحري|بطيء في التعلق لكنه ثابت وجادّ، ويرى الحب التزاماً طويل الأمد.|يصعد سلم النجاح بثبات في الإدارة والهندسة والمال والقانون.|العظام والمفاصل والإجهاد من العمل، فالراحة ضرورية له.|8، 4، 26',
+'حامل الماء|صديق قبل أن يكون حبيباً، يريد شريكاً يحترم استقلاله وأفكاره.|ينجح في التقنية والعلوم والابتكار والعمل الإنساني.|الدورة الدموية والكاحلان، وتفيده الرياضة والهواء الطلق.|4، 7، 11',
+'السمكتان|رومانسي حالم يمنح كل مشاعره، ويحتاج شريكاً يحميه من خيبات الأمل.|متألق في الفن والموسيقى والتصوير والعمل الروحي والإنساني.|القدمان والمناعة والتأثر النفسي، ويحتاج النوم والماء والهدوء.|7، 3، 12'],
+en:[
+'The Ram|A passionate, direct lover who enjoys the chase and needs a partner who matches his energy.|Shines in leadership, entrepreneurship and sports, anything needing fast decisions.|High energy, but prone to headaches and injuries. Needs enough rest.|9, 1, 17',
+'The Bull|Loyal and calm, builds long relationships on security and tenderness.|Succeeds in finance, art, cooking and real estate. Prefers stable work.|Sensitive throat and neck. Watch diet and weight.|6, 2, 24',
+'The Twins|Loves conversation, fun and novelty, and gets bored by routine quickly.|Suited to media, marketing, writing, teaching and sales.|Nervous tension and little sleep are the main challenges. Meditation helps.|5, 7, 14',
+'The Crab|Romantic and caring, gives deep love and needs reassurance.|Succeeds in education, care, hospitality and careful money management.|The stomach reacts to emotions, so peace of mind is the base of his health.|2, 7, 11',
+'The Lion|Warm and generous in love, enjoys appreciation and repays it lavishly.|Born for leadership, art, management and any field that puts him in front.|Heart and back need care. Staying active suits him.|1, 3, 10',
+'The Maiden|Honest and careful with feelings, shows love through actions and attention to detail.|Excellent in medicine, analysis, accounting, programming and organizing.|Prone to worry and a sensitive digestion. A healthy routine helps.|5, 14, 23',
+'The Scales|Loves partnership, beauty and romance, and hates conflict and coldness.|Shines in law, design, diplomacy and public relations.|Kidneys and balanced eating and sleep need the most attention.|6, 15, 24',
+'The Scorpion|A deep, devoted lover who trusts slowly but never forgets those he loves.|Suited to investigation, medicine, research, investing and psychology.|Physically strong but hides stress. Needs a healthy emotional outlet.|8, 11, 18',
+'The Archer|Loves freedom and adventure, looks for a partner to laugh and travel with.|Excels in travel, teaching, philosophy, sports and freelancing.|Hips, thighs and sports injuries deserve attention.|3, 9, 22',
+'The Sea-Goat|Slow to attach but steady and serious, sees love as a long-term commitment.|Climbs the ladder steadily in management, engineering, finance and law.|Bones, joints and work stress. Rest is essential.|8, 4, 26',
+'The Water-Bearer|A friend before a lover, wants a partner who respects his independence and ideas.|Succeeds in tech, science, innovation and humanitarian work.|Circulation and ankles. Exercise and fresh air help.|4, 7, 11',
+'The Two Fish|A dreamy romantic who gives all his feelings and needs protection from disappointment.|Brilliant in art, music, photography, and spiritual or humanitarian work.|Feet, immunity and emotional sensitivity. Needs sleep, water and calm.|7, 3, 12']};
+const SY=Array.from('♈♉♊♋♌♍♎♏♐♑♒♓',c=>c+'\uFE0E'),C=[[4,8,10],[5,9,3],[6,10,0],[7,11,1],[0,8,6],[1,9,7],[2,10,4],[3,11,5],[0,4,6],[1,5,11],[2,6,8],[3,7,9]];
+const S=[[1,20,10],[2,19,11],[3,21,0],[4,20,1],[5,21,2],[6,21,3],[7,23,4],[8,23,5],[9,23,6],[10,23,7],[11,22,8],[12,22,9]];
+const sg=d=>{const k=(d.getMonth()+1)*100+d.getDate();let r=9;S.forEach(s=>{if(k>=s[0]*100+s[1])r=s[2]});return r};
+const st=i=>S.find(s=>s[2]==i);
+let lang='ar',B=null,tm,NX;
+try{lang=localStorage.lang||'ar'}catch(e){}
+function age(b,n){let y=n.getFullYear()-b.getFullYear(),m=n.getMonth()-b.getMonth(),d=n.getDate()-b.getDate();if(d<0){m--;d+=new Date(n.getFullYear(),n.getMonth(),0).getDate()}if(m<0){y--;m+=12}return[y,m,d]}
+function sel(){const t=L[lang],loc=lang=='ar'?'ar-u-nu-latn':'en-US',v=['dd','dm','dy'].map(k=>$(k).value),Y=new Date().getFullYear(),o=(a,b)=>`<option value="${a}">${b}</option>`;
+$('dd').innerHTML=o('',t.dl[0])+Array.from({length:31},(_,i)=>o(i+1,i+1)).join('');
+$('dm').innerHTML=o('',t.dl[1])+Array.from({length:12},(_,i)=>o(i+1,new Date(2024,i,1).toLocaleDateString(loc,{month:'long'}))).join('');
+$('dy').innerHTML=o('',t.dl[2])+Array.from({length:Y-1919},(_,i)=>o(Y-i,Y-i)).join('');
+['dd','dm','dy'].forEach((k,i)=>$(k).value=v[i])}
+function tr(){const t=L[lang];sel();$('fy').placeholder=t.fp;document.documentElement.lang=lang;document.documentElement.dir=lang=='ar'?'rtl':'ltr';document.querySelectorAll('[data-t]').forEach(e=>e.textContent=t[e.dataset.t]);$('lg').textContent=lang=='ar'?'English':'عربي';document.title=t.title;if(B)render()}
+function render(){
+const t=L[lang],n=new Date(),[y,m,d]=age(B,n),i=sg(B),z=Z[lang][i].split('|'),x=Z2[lang][i].split('|'),loc=lang=='ar'?'ar-u-nu-latn':'en-US';
+$('res').hidden=false;
+$('ay').textContent=y+' '+t.yr;$('amd').textContent=m+' '+t.mo+' · '+d+' '+t.dy;
+$('st').innerHTML=t.u.map((u,k)=>`<div class="stat"><b id="s${k}"></b><span>${u}</span></div>`).join('');
+let nx=new Date(n.getFullYear(),B.getMonth(),B.getDate());const t0=new Date(n.getFullYear(),n.getMonth(),n.getDate());
+if(nx<t0)nx.setFullYear(nx.getFullYear()+1);
+NX=nx;$('nb').innerHTML=nx-t0==0?t.today:'<h3 style="margin:0 0 4px">'+t.nb+'</h3><div class="grid">'+t.nu.map((u,k)=>`<div class="stat"><b id="n${k}"></b><span>${u}</span></div>`).join('')+'</div>';
+const fm=x=>x.toLocaleDateString(loc,{month:'long',day:'numeric'}),a=st(i),nxs=S[(S.indexOf(a)+1)%12],s0=new Date(2024,a[0]-1,a[1]),e0=new Date(2024,nxs[0]-1,nxs[1]-1);
+$('zd').innerHTML=`<div class="zh"><div class="sym">${SY[i]}</div><div><h2>${z[0]}</h2><p class="mu">${fm(s0)} – ${fm(e0)}</p></div></div>
+<div class="chips"><span>${t.e[i%4]}</span><span>${t.md[i%3]}</span><span>${t.pl}: ${z[1]}</span><span>${t.sy}: ${x[0]}</span><span>${t.op}: ${SY[(i+6)%12]} ${Z[lang][(i+6)%12].split('|')[0]}</span><span>${t.nm}: ${x[4]}</span></div><p>${z[2]}</p><h3>${t.lv}</h3><p>${x[1]}</p><h3>${t.cr}</h3><p>${x[2]}</p><h3>${t.hl}</h3><p>${x[3]}</p>
+<div class="two"><div><h3>${t.str}</h3><p>${z[3]}</p></div><div><h3>${t.weak}</h3><p>${z[4]}</p></div></div>
+<h3>${t.comp}</h3><div class="chips">${C[i].map(j=>`<span>${SY[j]} ${Z[lang][j].split('|')[0]}</span>`).join('')}</div>
+<div class="grid"><div class="stat"><b>${z[5]}</b><span>${t.lc}</span></div><div class="stat"><b>${z[6]}</b><span>${t.ls}</span></div><div class="stat"><b>${z[7]}</b><span>${t.ld}</span></div></div><p class="mu" style="margin-top:12px">${t.disc}</p>`;
+const dd=(n-B)/864e5,by=B.getFullYear(),g=by<1946?0:by<1965?1:by<1981?2:by<1997?3:by<2013?4:5;
+$('ft').innerHTML=[[t.wd,B.toLocaleDateString(loc,{weekday:'long'})],[t.gen,t.g[g]],[t.wk,f(dd/7)],[t.hb,f(dd*1440*75/1e6)+' '+t.M],[t.br,f(dd*1440*16/1e6)+' '+t.M],[t.stp,f(dd*6500/1e6)+' '+t.M],[t.km,f(dd*24*107000/1e9)+' '+t.B+' '+t.kmu],[t.mn,f(dd/29.53)],[t.sl,(dd/365.25/3).toFixed(1)+' '+t.yu],[t.ml,f(dd*3)],[t.wt,f(dd*2)],[t.ms,(dd/687).toFixed(1)],[t.mr,f(dd/88)],[t.jp,(dd/4333).toFixed(1)]].map(x=>`<div class="stat"><b>${x[1]}</b><span>${x[0]}</span></div>`).join('');
+map(dd);fut();
+clearInterval(tm);tick();tm=setInterval(tick,1000)}
+function tick(){const ms=Date.now()-B;[864e5,36e5,6e4,1e3].forEach((u,k)=>{const e=$('s'+k);if(e)e.textContent=f(ms/u)});nbt()}
+function nbt(){if(!NX||!$('n0'))return;const n=new Date(),t1=new Date(n.getFullYear(),n.getMonth(),n.getDate()+1),r=t1-n;if(NX<t1)return;const[y,m,d]=age(t1,NX);[y*12+m,Math.floor(d/7),d%7,Math.floor(r/36e5),Math.floor(r%36e5/6e4),Math.floor(r%6e4/1e3)].forEach((v,k)=>$('n'+k).textContent=v)}
+function map(dd){const c=$('cv'),w=c.clientWidth,dp=devicePixelRatio||1,s=w/52,h=s*90;c.width=w*dp;c.height=h*dp;c.style.height=h+'px';const x=c.getContext('2d');x.scale(dp,dp);const wl=Math.min(4680,Math.floor(dd/7));
+for(let k=0;k<4680;k++){x.beginPath();x.arc((k%52+.5)*s,(Math.floor(k/52)+.5)*s,s*.36,0,7);x.fillStyle=k<wl?'#a78bfa':k==wl?'#fff':'#2a2350';x.fill()}
+$('mf').textContent=L[lang].mf.replace('{w}',f(wl))}
+function fut(){if(!B)return;const v=$('fy').value,y=+v,t=L[lang],o=$('fr');o.hidden=!v;if(v)o.textContent=y>B.getFullYear()?t.fr.replace('{y}',y).replace('{a}',y-B.getFullYear()):t.fe}
+function go(){const c=+$('dd').value,b=+$('dm').value,a=+$('dy').value;if(!a||!b||!c)return alert(L[lang].bad);const d=new Date(a,b-1,c);if(d.getDate()!=c||d>new Date())return alert(L[lang].bad);B=d;try{localStorage.dob=a+'-'+b+'-'+c}catch(e){}render();$('zd').scrollIntoView({behavior:'smooth',block:'start'})}
+$('go').onclick=go;$('fg').onclick=fut;$('fy').oninput=fut;
+$('lg').onclick=()=>{lang=lang=='ar'?'en':'ar';try{localStorage.lang=lang}catch(e){}tr()};
+$('sh').onclick=()=>{if(!B)return;const[y]=age(B,new Date()),i=sg(B),nm=Z[lang][i].split('|')[0],c=document.createElement('canvas');c.width=1080;c.height=1350;const x=c.getContext('2d'),g=x.createLinearGradient(0,0,1080,1350);g.addColorStop(0,'#33207a');g.addColorStop(1,'#07050f');x.fillStyle=g;x.fillRect(0,0,1080,1350);x.textAlign='center';
+x.fillStyle='#e8c37a';x.font='700 48px Cairo';x.fillText('A G E V E R S E',540,200);x.fillStyle='#fff';x.font='900 400px Cairo';x.fillText(y,540,700);x.fillStyle='#c4b5fd';x.font='700 70px Cairo';x.fillText(SY[i]+' '+nm,540,860);x.fillStyle='#9a93b8';x.font='42px Cairo';x.fillText(B.toLocaleDateString('en-GB'),540,1000);x.fillText('MY JOURNEY IN TIME',540,1200);
+const a=document.createElement('a');a.download='ageverse.png';a.href=c.toDataURL('image/png');a.click()};
+addEventListener('resize',()=>{if(B)map((new Date()-B)/864e5)});
+tr();try{if(localStorage.dob){const[a,b,c]=localStorage.dob.split('-').map(Number);$('dd').value=c;$('dm').value=b;$('dy').value=a;B=new Date(a,b-1,c);render()}}catch(e){}
+</script>
+</body>
+</html>
